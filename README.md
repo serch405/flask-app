@@ -5,13 +5,22 @@ This Flask app was created as a test object for automated tests. It allows a log
 1. Create a new virtual environment and activate it
  ```
 python3 -m venv venv
+```
+2. Activate a virtual environment
+on Windows:
+```
 .\venv\Scripts\activate
+```
+on Linux:
+```
+source venv/bin/activate
 ```
 2. Install the required dependencies
 ```
 pip install -r requirements.txt
 ```
-3. Initialize the database
+3. Create `config.ini` inside the project folder. It should be based on `sample_config.ini`. Note that `MAIL_PASSWORD` property is a custom password for application (see https://support.google.com/accounts/answer/185833?hl=en)
+4. Initialize the database
 ```
 flask --app main db init
 ```
@@ -23,7 +32,6 @@ flask --app main db migrate
 ```
 flask --app main db upgrade
 ```
-6. Fill `config.ini` based on `sample_config.ini`. Note that `MAIL_PASSWORD` property is not a regular Gmail password, it's a custom password for application (see https://support.google.com/accounts/answer/185833?hl=en)
 
 # How to run Flask application in debug mode
 ```
