@@ -1,0 +1,28 @@
+<!doctype html>
+<head>
+    <title>Dashboard page</title>
+</head>
+<body>
+    <div class="container">
+        <div>
+        <h1>Hello, <u>{{ session['username'] }}</u> :)</h1>
+        <div style="width:400px; border:dotted; padding: 5px">
+            <h3>For downloading testing</h3>
+            <p>
+                Download TXT file: <a href="{{ url_for('download_file', filename='sample.txt') }}" download="sample.txt">sample.txt</a>
+                </br>
+                Download CSV file: <a href="{{ url_for('download_file', filename='sample.csv') }}">sample.csv</a>
+            </p>
+        </div>
+        </br>
+        <div style="width:400px; border:dotted; padding: 5px">
+            <h3>For iframe testing</h3>
+            <iframe title="iframe" src="{{ url_for('iframe') }}" width="300" height="100"></iframe>
+        </div>
+        </br>
+        <form action="{{ url_for('logout') }}" method="post">
+            <button type="submit">Logout</button>
+        </form>
+    </div>
+</body>
+</html>
