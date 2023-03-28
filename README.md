@@ -33,17 +33,15 @@ flask --app main db migrate
 flask --app main db upgrade
 ```
 
-# How to run Flask application in debug mode
+# How to run Flask application in a development environment
 ```
 flask --app main run --host=0.0.0.0 --debug
 ```
 
-# How to access from the same pc
+# How to run Flask application in a production environemnt
+1. Install a web server (e.g. Nginx)
+2. Configure the web server to act as a reverse proxy for the application
+3. Run the application
 ```
-127.0.0.1:5000
-```
-
-# How to access from a different pc inside the same local network
-```
-<host_ip>:5000
+gunicorn main:app 0.0.0.0:8080
 ```
