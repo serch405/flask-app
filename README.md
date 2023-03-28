@@ -43,5 +43,5 @@ flask --app main run --host=0.0.0.0 --debug
 2. Configure the web server to act as a reverse proxy for the application
 3. Run the application
 ```
-gunicorn main:app 0.0.0.0:8080
+gunicorn main:app -b 0.0.0.0:8080
 ```
