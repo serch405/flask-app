@@ -3,10 +3,11 @@ This Flask app was created as a test object for automated tests. It allows a log
 
 # Preconditions
 1. Create a new virtual environment and activate it
- ```
+```
 python3 -m venv venv
 ```
 2. Activate a virtual environment
+
 on Windows:
 ```
 .\venv\Scripts\activate
@@ -15,20 +16,22 @@ on Linux:
 ```
 source venv/bin/activate
 ```
-2. Install the required dependencies
+3. Go to the project directory
+4. Install the required dependencies
 ```
 pip install -r requirements.txt
 ```
-3. Create `config.ini` inside the project folder. It should be based on `sample_config.ini`. Note that `MAIL_PASSWORD` property is a custom password for application (see https://support.google.com/accounts/answer/185833?hl=en)
-4. Initialize the database
+5. Add `config.ini`, it should contain the same list of properties as in `sample_config.ini`
+6. Fill `config.ini`, where `MAIL_PASSWORD` property is a custom password for application, see https://support.google.com/accounts/answer/185833?hl=en
+7. Initialize the database
 ```
 flask --app main db init
 ```
-4. Generate a migration script based on Database models
+8. Generate a migration script based on Database models
 ```
 flask --app main db migrate
 ```
-5. Apply the migration to your database
+9. Apply the migration to your database
 ```
 flask --app main db upgrade
 ```
