@@ -2,11 +2,11 @@
 This Flask app was created as a test object for automated tests. It allows a logged-in user to download static files and showcases the usage of iFrames.
 
 # Preconditions
-1. Create a new virtual environment and activate it
+1. Create a new virtual environment
 ```
 python3 -m venv venv
 ```
-2. Activate a virtual environment
+2. Activate the virtual environment
 
 on Windows:
 ```
@@ -17,7 +17,7 @@ on Linux:
 source venv/bin/activate
 ```
 3. Go to the project directory
-4. Install the required dependencies
+4. Install required dependencies
 ```
 pip install -r requirements.txt
 ```
