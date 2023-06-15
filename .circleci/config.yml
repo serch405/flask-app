@@ -31,18 +31,11 @@ jobs:
             zip -r project.zip .
             aws s3 cp project.zip s3://serch405-bucket/project.zip
 
-  manual-trigger:
-    docker:
-      - image: circleci/python:3.8
-      
-    steps:
-      - run: echo "This job is triggered manually."
-
 workflows:
   version: 2
   manual-workflow:
     jobs:
-      - manual-trigger
+      - upload-project-on-s3
 
   main-branch-workflow:
     jobs:
