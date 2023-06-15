@@ -37,6 +37,7 @@ jobs:
             aws s3 cp project.zip s3://serch405-bucket/project.zip
 
   manual-trigger:
+    executor: docker
     steps:
       - run:
           name: Manual Trigger
