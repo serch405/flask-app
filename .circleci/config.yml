@@ -31,15 +31,22 @@ jobs:
             zip -r project.zip .
             aws s3 cp project.zip s3://serch405-bucket/project.zip
 
+  manual-trigger:
+    executor: aws-cli/python3
+      steps:
+        - run:
+          name: Manual Trigger
+          command: echo "This job is triggered manually."
+
 workflows:
   version: 2
   manual-workflow:
     jobs:
-      - upload-project-on-s3:
+      - manual-trigger:
           filters:
             branches:
               ignore: /.*/
-      
+
   main-branch-workflow:
     jobs:
       - upload-project-on-s3:
