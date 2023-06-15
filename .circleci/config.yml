@@ -1,7 +1,7 @@
 version: 2.1
 
 jobs:
-  say-hello:
+  upload-project:
     docker:
       - image: circleci/python:3.8
 
@@ -32,7 +32,7 @@ jobs:
             aws s3 cp project.zip s3://serch405-bucket/project.zip
 
 workflows:
-  version: 2
-  say-hello-workflow:
+  version: 1
+  upload-project-on-s3:
     jobs:
-      - say-hello
+      - upload-project
