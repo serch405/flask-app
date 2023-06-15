@@ -33,9 +33,6 @@ jobs:
 
 workflows:
   version: 2
-  manual-workflow:
-    jobs:
-      - upload-project-on-s3
 
   main-branch-workflow:
     jobs:
