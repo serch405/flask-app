@@ -42,10 +42,7 @@ workflows:
   version: 2
   manual-workflow:
     jobs:
-      - manual-trigger:
-          filters:
-            branches:
-              ignore: /.*/
+      - manual-trigger
 
   main-branch-workflow:
     jobs:
