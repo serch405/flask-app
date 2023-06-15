@@ -36,9 +36,7 @@ jobs:
       - image: circleci/python:3.8
       
     steps:
-      - run:
-          name: Manual Trigger
-          command: echo "This job is triggered manually."
+      - run: echo "This job is triggered manually."
 
 workflows:
   version: 2
@@ -48,7 +46,14 @@ workflows:
           filters:
             branches:
               ignore: /.*/
-          type: approval
+            triggers:
+              - workflow:
+                name: Manual Trigger
+                dispatch:
+                  inputs:
+                    parameter_name:  # Add any input parameters you need
+                      description: "Description of the input parameter"
+                      default: "Default value for the input parameter"
 
   main-branch-workflow:
     jobs:
