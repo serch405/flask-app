@@ -35,8 +35,8 @@ jobs:
     executor: aws-cli/python3
     steps:
       - run:
-        name: Manual Trigger
-        command: echo "This job is triggered manually."
+          name: Manual Trigger
+          command: echo "This job is triggered manually."
 
 workflows:
   version: 2
