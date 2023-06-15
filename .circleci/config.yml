@@ -35,7 +35,10 @@ workflows:
   version: 2
   manual-workflow:
     jobs:
-      - upload-project-on-s3
+      - upload-project-on-s3:
+          filters:
+            branches:
+              ignore: /.*/
       
   main-branch-workflow:
     jobs:
