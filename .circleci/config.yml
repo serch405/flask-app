@@ -1,7 +1,7 @@
 version: 2.1
 
 jobs:
-  upload-project:
+  upload-project-on-s3:
     docker:
       - image: circleci/python:3.8
 
@@ -32,7 +32,14 @@ jobs:
             aws s3 cp project.zip s3://serch405-bucket/project.zip
 
 workflows:
-  version: 1
-  upload-project-on-s3:
+  version: 2
+  manual-workflow:
     jobs:
-      - upload-project
+      - upload-project-on-s3
+      
+  main-branch-workflow:
+    jobs:
+      - upload-project-on-s3:
+          filters:
+            branches:
+              only: main
