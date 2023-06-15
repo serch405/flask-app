@@ -32,7 +32,7 @@ jobs:
             aws s3 cp project.zip s3://serch405-bucket/project.zip
 
   manual-trigger:
-    executor: aws-cli/python3
+    executor: aws-cli-executor
     steps:
       - run:
           name: Manual Trigger
