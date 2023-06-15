@@ -1,0 +1,42 @@
+version: 2.1
+
+jobs:
+  upload-project-on-s3:
+    docker:
+      - image: circleci/python:3.8
+
+    steps:
+      - checkout
+
+      - run:
+          name: Install AWS CLI
+          command: |
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            unzip awscliv2.zip
+            sudo ./aws/install
+
+      - run:
+          name: Configure AWS Credentials
+          command: |
+            mkdir -p ~/.aws
+            echo "[default]" >> ~/.aws/credentials
+            echo "aws_access_key_id = ${AWS_ACCESS_KEY_ID}" >> ~/.aws/credentials
+            echo "aws_secret_access_key = ${AWS_SECRET_ACCESS_KEY}" >> ~/.aws/credentials
+            echo "[default]" >> ~/.aws/config
+            echo "region = ${AWS_REGION}" >> ~/.aws/config
+
+      - run:
+          name: Create and Deploy ZIP
+          command: |
+            zip -r project.zip .
+            aws s3 cp project.zip s3://serch405-bucket/project.zip
+
+workflows:
+  version: 2
+
+  main-branch-workflow:
+    jobs:
+      - upload-project-on-s3:
+          filters:
+            branches:
+              only: main
