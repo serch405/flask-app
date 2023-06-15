@@ -1,10 +1,5 @@
 version: 2.1
 
-executors:
-  aws-cli-executor:
-    docker:
-      - image: circleci/python:3.8
-
 jobs:
   upload-project-on-s3:
     docker:
@@ -37,7 +32,9 @@ jobs:
             aws s3 cp project.zip s3://serch405-bucket/project.zip
 
   manual-trigger:
-    executor: docker
+    docker:
+      - image: circleci/python:3.8
+      
     steps:
       - run:
           name: Manual Trigger
