@@ -1,7 +1,7 @@
 version: 2.1
 
 jobs:
-  build:
+  say-hello:
     docker:
       - image: circleci/python:3.8
 
@@ -33,9 +33,6 @@ jobs:
 
 workflows:
   version: 2
-  main:
+  say-hello-workflow:
     jobs:
-      - build:
-          filters:
-            branches:
-              only: main
+      - say-hello
