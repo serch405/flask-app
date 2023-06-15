@@ -46,14 +46,6 @@ workflows:
           filters:
             branches:
               ignore: /.*/
-            triggers:
-              - workflow:
-                name: Manual Trigger
-                dispatch:
-                  inputs:
-                    parameter_name:  # Add any input parameters you need
-                      description: "Description of the input parameter"
-                      default: "Default value for the input parameter"
 
   main-branch-workflow:
     jobs:
