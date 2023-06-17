@@ -29,7 +29,7 @@ jobs:
           name: Create and Deploy ZIP
           command: |
             zip -r project.zip .
-            aws s3 cp project.zip s3://circleci/flask-app.zip
+            aws s3 cp project.zip s3://serch405/circleci/flask-app.zip
 
 workflows:
   version: 2
