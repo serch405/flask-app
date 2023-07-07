@@ -39,6 +39,28 @@ jobs:
       - checkout
 
       - run:
+          name: Install AWS CLI
+          command: |
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            unzip awscliv2.zip
+            sudo ./aws/install
+
+      - run:
+          name: Configure AWS Credentials
+          command: |
+            mkdir -p ~/.aws
+            echo "[default]" >> ~/.aws/credentials
+            echo "aws_access_key_id = ${AWS_ACCESS_KEY_ID}" >> ~/.aws/credentials
+            echo "aws_secret_access_key = ${AWS_SECRET_ACCESS_KEY}" >> ~/.aws/credentials
+            echo "[default]" >> ~/.aws/config
+            echo "region = ${AWS_REGION}" >> ~/.aws/config
+
+      - run:
+          name: Pull config.ini
+          command: |
+            aws s3 cp s3://serch405/configs/flask-app/config.ini
+
+      - run:
           name: Set up Python environment
           command: |
             python3 -m venv venv
@@ -48,11 +70,6 @@ jobs:
           name: Install dependencies
           command: |
             pip install -r requirements.txt
-
-      - run:
-          name: Pull config.ini
-          command: |
-            aws s3 cp s3://serch405/configs/flask-app/config.ini
 
       - run:
           name: Display folders
