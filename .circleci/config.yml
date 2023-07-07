@@ -72,11 +72,6 @@ jobs:
             pip install -r requirements.txt
 
       - run:
-          name: Display folders
-          command: |
-            ls -l
-
-      - run:
           name: Run unit tests
           command: |
             pytest
@@ -84,13 +79,13 @@ jobs:
 workflows:
   version: 2
 
-  main-branch-workflow:
+  upload-project-on-s3-workflow:
     jobs:
       - upload-project-on-s3:
           filters:
             branches:
-              only: add-circleci-config-for-tests
-      - test:
-          filters:
-            branches:
-              only: add-circleci-config-for-tests
+              only: main
+
+  test-workflow:
+    jobs:
+      - test
