@@ -74,7 +74,12 @@ jobs:
       - run:
           name: Run unit tests
           command: |
-            pytest
+            coverage run --source=main -m pytest
+
+      - run:
+          name: Display test coverage
+          command: |
+            coverage report -m
 
 workflows:
   version: 2
