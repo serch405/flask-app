@@ -32,4 +32,4 @@ workflows:
       - upload-project-on-s3:
           filters:
             branches:
-              only: main
+              only: add-circleci-config-for-tests
