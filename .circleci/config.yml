@@ -58,7 +58,7 @@ jobs:
       - run:
           name: Pull config.ini
           command: |
-            aws s3 cp s3://serch405/configs/flask-app/config.ini
+            aws s3 cp s3://serch405/configs/flask-app/config.ini .
 
       - run:
           name: Set up Python environment
