@@ -74,7 +74,7 @@ jobs:
       - run:
           name: Run unit tests and check the coverage
           command: |
-            coverage run --source=main -m pytest
+            pytest --cov=main
             coverage report -m
 
 workflows:
