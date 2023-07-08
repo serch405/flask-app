@@ -74,7 +74,7 @@ jobs:
       - run:
           name: Run unit tests and check the coverage
           command: |
-            pytest --cov=flaskapp
+            pytest --cov=main --cov=api
             coverage report -m
 
 workflows:
