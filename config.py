@@ -5,6 +5,10 @@ from flask_mail import Mail
 from configparser import ConfigParser
 import os
 
+
+if __name__ == '__main__':
+    app.run()
+
 app = Flask(__name__)
 
 config = ConfigParser()
