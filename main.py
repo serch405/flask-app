@@ -1,10 +1,13 @@
-from flask import Flask, render_template, request, url_for, redirect, abort, flash, session, request, send_from_directory
+from flask import Flask, render_template, request, url_for, redirect, abort, flash, session, send_from_directory, jsonify
 from flask_mail import Message
 from werkzeug.security import generate_password_hash, check_password_hash
 from config import app, db, mail
 from models import User
 from datetime import datetime
-import random
+from api import api_bp
+
+
+app.register_blueprint(api_bp)
 
 @app.route('/')
 def home():
