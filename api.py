@@ -8,7 +8,6 @@ from flask_restx import Api, Resource
 api_bp = Blueprint('api', __name__, url_prefix='/api')
 api = Api(api_bp, version='1.0', title='My API', description='My API documentation using Swagger')
 
-
 @api_bp.errorhandler(400)
 def custom400(error):
     response = jsonify({'message': error.description['message']})
