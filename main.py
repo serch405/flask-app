@@ -2,12 +2,15 @@ from flask import Flask, render_template, request, url_for, redirect, abort, fla
 from flask_mail import Message
 from werkzeug.security import generate_password_hash, check_password_hash
 from config import app, db, mail
+from api import api_bp
 from models import User
 from datetime import datetime
-from api import api_bp
 
 
 app.register_blueprint(api_bp)
+
+if __name__ == '__main__':
+    app.run(debug=True)
 
 @app.route('/')
 def home():
@@ -95,14 +98,14 @@ def iframe():
     current_time = datetime.now()
     return render_template('iframe.html', current_time=current_time)
 
+@app.route('/static/<path:filename>')
+def download_file(filename):
+    return send_from_directory('static', filename)
+
 @app.route('/logout', methods=['POST'])
 def logout():
     session.clear()
     return redirect(url_for('home'))
-
-@app.route('/static/<path:filename>')
-def download_file(filename):
-    return send_from_directory('static', filename)
 
 @app.before_request
 def require_login():
