@@ -5,7 +5,35 @@
 <body>
     <div class="container">
         <div>
-        <h1>Hello, <u>{{ session['username'] }}</u> :)</h1>
+        <h1>Hello, <u>{{ user.username }}</u> :)</h1>
+        <div style="width:400px; border:dotted; padding: 5px">
+
+            {% if user.profile_image %}
+            {% set profile_image_path = user.profile_image|replace('\\', '/') %}
+                <img src="{{ url_for('static', filename=profile_image_path) }}" alt="Profile Image" width="200">
+            {% endif %}
+            
+            <h3>Edit Profile</h3>
+            <form method="POST" action="{{ url_for('profile') }}" enctype="multipart/form-data">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" value="{{ user.username }}"><br><br>
+                
+                <label for="first_name">First Name:</label>
+                <input type="text" id="first_name" name="first_name" value="{{ user.first_name }}"><br><br>
+                
+                <label for="last_name">Last Name:</label>
+                <input type="text" id="last_name" name="last_name" value="{{ user.last_name }}"><br><br>
+                
+                <label for="country">Country:</label>
+                <input type="text" id="country" name="country" value="{{ user.country }}"><br><br>
+
+                <label for="profile_image">Update Avatar:</label>
+                <input type="file" id="profile_image" name="profile_image"><br><br>
+                
+                <input type="submit" value="Save">
+            </form>
+        </div>
+        </br>
         <div style="width:400px; border:dotted; padding: 5px">
             <h3>For downloading testing</h3>
             <p>

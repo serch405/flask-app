@@ -1,10 +1,13 @@
 from flask import Flask, render_template, request, url_for, redirect, abort, flash, session, send_from_directory, jsonify
 from flask_mail import Message
 from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.utils import secure_filename
 from config import app, db, mail
 from api import api_bp
 from models import User
 from datetime import datetime
+import random
+import os
 
 
 app.register_blueprint(api_bp)
@@ -44,6 +47,7 @@ def register():
         db.session.commit()
         flash('Registration successful. Please login')
         return redirect(url_for('login'))
+
     return render_template('register.html')
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -63,6 +67,7 @@ def login():
         mail.send(msg)
         session['verification_code'] = verification_code
         return redirect(url_for('verify'))
+
     return render_template('login.html')
 
 @app.route('/verify', methods=['GET', 'POST'])
@@ -84,14 +89,44 @@ def verify():
         if not check_password_hash(user.password, password):
             flash('Invalid password or code')
             return render_template('verify.html', email=email)
-        session['username'] = user.username
+
+        session['user_id'] = user.id
+        session.pop('email', None)
         session.pop('verification_code', None)
-        return redirect(url_for('dashboard'))
+        return redirect(url_for('dashboard') + '?user_id=' + str(user.id))
+
     return render_template('verify.html', email=email)
 
 @app.route('/dashboard')
 def dashboard():
-    return render_template('dashboard.html')
+    user_id = request.args.get('user_id')
+    user = User.query.get(user_id)
+    return render_template('dashboard.html', user=user)
+
+@app.route('/profile', methods=['GET', 'POST'])
+def profile():
+    if request.method == 'POST':
+        first_name = request.form['first_name']
+        last_name = request.form['last_name']
+        country = request.form['country']
+        profile_image = request.files['profile_image']
+
+        user = User.query.get(1)
+
+        user.first_name = first_name
+        user.last_name = last_name
+        user.country = country
+
+        if profile_image:
+            filename = secure_filename(profile_image.filename)
+            profile_image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            user.profile_image = os.path.join('profile_images', filename)
+
+        db.session.commit()
+        return redirect(url_for('profile'))
+
+    user = User.query.get(1)
+    return render_template('dashboard.html', user=user)
 
 @app.route('/iframe')
 def iframe():
@@ -109,6 +144,6 @@ def logout():
 
 @app.before_request
 def require_login():
-    not_allowed_routes = ['dashboard', 'static', 'iframe']
-    if request.endpoint in not_allowed_routes and 'username' not in session:
+    not_allowed_routes = ['dashboard']
+    if request.endpoint in not_allowed_routes and 'user_id' not in session:
         return redirect(url_for('login'))
