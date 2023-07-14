@@ -5,6 +5,7 @@ from config import app, db, mail
 from api import api_bp
 from models import User
 from datetime import datetime
+import random
 
 
 app.register_blueprint(api_bp)
