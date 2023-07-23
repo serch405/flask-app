@@ -9,8 +9,11 @@
         <div style="width:400px; border:dotted; padding: 5px">
 
             {% if user.profile_image %}
-            {% set profile_image_path = user.profile_image|replace('\\', '/') %}
+                {% set profile_image_path = user.profile_image|replace('\\', '/') %}
                 <img src="{{ url_for('static', filename=profile_image_path) }}" alt="Profile Image" width="200">
+            {% else %}
+                {% set default_profile_image_path = "default_profile_image.png" %}
+                <img src="{{ url_for('static', filename=default_profile_image_path) }}" alt="Default Profile Image" width="200">
             {% endif %}
             
             <h3>Edit Profile</h3>
@@ -27,7 +30,7 @@
                 <label for="country">Country:</label>
                 <input type="text" id="country" name="country" value="{{ user.country }}"><br><br>
 
-                <label for="profile_image">Update Avatar:</label>
+                <label for="profile_image">Update Profile Image:</label>
                 <input type="file" id="profile_image" name="profile_image"><br><br>
                 
                 <input type="submit" value="Save">
