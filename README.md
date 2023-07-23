@@ -49,7 +49,7 @@ flask --app main run --host=0.0.0.0 --debug
 gunicorn main:app -b 0.0.0.0:8080
 ```
 
-# How to run all tests
+# Run unit tests and measure the coverage
 ```
-pytest
+pytest --cov=main
 ```
