@@ -72,10 +72,9 @@ jobs:
             pip install -r requirements.txt
 
       - run:
-          name: Run unit tests and check the coverage
+          name: Run unit tests and measure the coverage
           command: |
-            pytest --cov=main --cov=api
-            coverage report -m
+            pytest --cov=main
 
 workflows:
   version: 2
