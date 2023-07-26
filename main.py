@@ -109,7 +109,6 @@ def profile():
         first_name = request.form['first_name']
         last_name = request.form['last_name']
         country = request.form['country']
-        profile_image = request.files['profile_image']
 
         user = User.query.get(1)
 
@@ -117,13 +116,28 @@ def profile():
         user.last_name = last_name
         user.country = country
 
+        db.session.commit()
+        return redirect(url_for('profile'))
+
+    user = User.query.get(1)
+    return render_template('dashboard.html', user=user)
+
+@app.route('/profile_image', methods=['GET', 'POST'])
+def profile_image():
+    if request.method == 'POST':
+        profile_image = request.files['profile_image']
+
+        user = User.query.get(1)
+
         if profile_image:
             filename = secure_filename(profile_image.filename)
             profile_image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             user.profile_image = os.path.join('profile_images', filename)
+        else:
+            user.profile_image = None
 
         db.session.commit()
-        return redirect(url_for('profile'))
+        return redirect(url_for('profile_image'))
 
     user = User.query.get(1)
     return render_template('dashboard.html', user=user)

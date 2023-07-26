@@ -8,18 +8,51 @@
         <h1>Hello, <u>{{ user.username }}</u> :)</h1>
         <div style="width:400px; border:dotted; padding: 5px">
 
-            {% if user.profile_image %}
-                {% set profile_image_path = user.profile_image|replace('\\', '/') %}
-                <img src="{{ url_for('static', filename=profile_image_path) }}" alt="Profile Image" width="200">
-            {% else %}
-                {% set default_profile_image_path = "default_profile_image.png" %}
-                <img src="{{ url_for('static', filename=default_profile_image_path) }}" alt="Default Profile Image" width="200">
-            {% endif %}
-            
-            <h3>Edit Profile</h3>
+            <form id="profile_image_form" method="POST" action="{{ url_for('profile_image') }}" enctype="multipart/form-data">
+
+                {% if user.profile_image %}
+                    {% set profile_image_path = user.profile_image|replace('\\', '/') %}
+                    <img src="{{ url_for('static', filename=profile_image_path) }}" alt="Profile Image" width="200">
+                {% else %}
+                    {% set default_profile_image_path = "default_profile_image.png" %}
+                    <img src="{{ url_for('static', filename=default_profile_image_path) }}" alt="Default Profile Image" width="200">
+                {% endif %}
+
+                <div style="position: relative; display: inline-block;">
+                    <select id="profile_image_dropdown" name="profile_image_dropdown" style="position: absolute; bottom: 0; right: 0;" onchange="handleProfileImage(this.value)">
+                        <option value="" selected>Edit</option>
+                        <option value="upload">Upload</option>
+                        <option value="reset">Reset</option>
+                    </select>
+                </div>
+
+                <input type="file" id="profile_image" name="profile_image" style="display: none;">
+                
+            </form>
+            <br><br>
+
+            <script>
+                function handleProfileImage(option) {
+                    if (option === "upload") {
+                        document.querySelector("#profile_image").click();
+                    }
+                    else if (option === "reset") {
+                        document.querySelector("#profile_image").value = "";
+                        document.getElementById("profile_image_form").submit();
+                    }
+                }
+
+                document.querySelector("#profile_image").addEventListener("change", function () {
+                    const selectedOption = document.querySelector("#profile_image_dropdown").value;
+                    if (selectedOption === "upload") {
+                        document.getElementById("profile_image_form").submit();
+                    }
+                });
+            </script>
+
             <form method="POST" action="{{ url_for('profile') }}" enctype="multipart/form-data">
                 <label for="username">Username:</label>
-                <input type="text" id="username" name="username" value="{{ user.username }}"><br><br>
+                <input type="text" id="username" name="username" value="{{ user.username }}" readonly><br><br>
                 
                 <label for="first_name">First Name:</label>
                 <input type="text" id="first_name" name="first_name" value="{{ user.first_name }}"><br><br>
@@ -30,13 +63,11 @@
                 <label for="country">Country:</label>
                 <input type="text" id="country" name="country" value="{{ user.country }}"><br><br>
 
-                <label for="profile_image">Update Profile Image:</label>
-                <input type="file" id="profile_image" name="profile_image"><br><br>
-                
                 <input type="submit" value="Save">
             </form>
         </div>
         </br>
+
         <div style="width:400px; border:dotted; padding: 5px">
             <h3>For downloading testing</h3>
             <p>
@@ -46,14 +77,17 @@
             </p>
         </div>
         </br>
+
         <div style="width:400px; border:dotted; padding: 5px">
             <h3>For iframe testing</h3>
             <iframe title="iframe" src="{{ url_for('iframe') }}" width="300" height="100"></iframe>
         </div>
         </br>
+
         <form action="{{ url_for('logout') }}" method="post">
             <button id="logout" type="submit">Logout</button>
         </form>
+
     </div>
 </body>
 </html>
